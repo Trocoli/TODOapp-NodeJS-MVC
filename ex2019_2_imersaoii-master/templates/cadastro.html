@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'FSapp/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'FSapp/css/styles.css' %}">
+    {% load crispy_forms_tags %}
+
+
+
+    <title>Imersão 2020.1</title>
+  </head>
+  <body>
+
+
+<!-- Logo * provisório * da Fábrica de Software -->
+
+<div class="container col-xl-4 col-md-6">
+
+  <div class="envelopeLogo">
+    <img src = "{% static 'FSapp/images/fabrica-branco.png' %}" alt = "Logo da Fábrica de Software">
+  </div>
+
+<!-- Boas vindas à Imersão -->
+
+    <div class="imersao">
+        <h3>IMERSÃO 2020.1</h3>
+    </div>
+    <div class="envelopeTopo">
+      <p text-align="center">Bem-vindo(a) à Imersão 2020.1! A seguir, preencha o formulário de cadastro para efetuar sua inscrição no processo de seleção para a Fábrica de Software do Unipê.</p>
+    </div>
+</div>
+
+<!--Formulário de cadastro-->
+
+<div class="container col-xl-4 col-md-6">
+    <div class="cadastro">
+        <h3>CADASTRO</h3>
+    </div>
+
+  <!--Dados cadastrais-->
+
+    <div class="envelopeForm">
+        <form enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.matricula|as_crispy_field}}
+        </div>
+        <div class="form-group">
+          {{ form.first_name|as_crispy_field}}
+        </div>
+        <div class="form-group">
+          {{ form.last_name|as_crispy_field}}
+        </div>
+        <div class="form-group">
+          {{ form.cpf|as_crispy_field}}
+        </div>
+          <div class="form-group" aria-placeholder="Email">
+              {{ form.email|as_crispy_field}}
+        </div>
+
+
+
+
+  <!--Upload de documentos-->
+
+        <h4 class = "text-primary text-center mt-5" >Documentos</h4>
+
+
+        <div class = "envelopeInforma">
+            <p class= "form-check-label font-weight-lighter text-center">Documentos requeridos:<br>Identidade, Declaração de Matrícula e Horário Individual em formato de imagem (Png ou Jpg).</p>
+        </div>
+
+
+        <div class="input-group mb-3 form-actions">
+          <div>
+
+              {{ form.anexo_1}}
+
+          </div>
+          <div>
+            {{ form.anexo_2}}
+          </div>
+            <div>
+            {{ form.anexo_3}}
+
+          <!--Curso-->
+
+        <div class="form-group">
+          {{ form.curso|as_crispy_field }}
+        </div>
+</div>
+          <div class="botaoEnviar">
+
+           <button type="submit" class="btn btn-primary btn-md btn-block" >Enviar</button>
+              <!-- onclick="window.location.href='confirma-cadastro.html' -->
+          </div>
+      </form>
+
+  <!--Confirmação de dados
+
+      <div class="envelopeInforma">
+        <p class = "text-primary text-center m-0" >Tudo pronto? Revise seus dados antes de prosseguir!</p>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+          <label class="form-check-label font-weight-lighter text-center" for="defaultCheck1">
+            Sim, revisei meus dados e estou pronto(a) para prosseguir.
+          </label>
+        </div>
+      </div>
+      -->
+
+    </div>
+  </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

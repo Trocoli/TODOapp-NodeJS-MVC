@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'FSapp/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'FSapp/css/styles.css' %}">
+    {% load crispy_forms_tags %}
+
+  <title>Relatório - Fábrica de Software - Imersão 2020.1</title>
+</head>
+<body>
+  <div class="container col-xl-4 col-md-6">
+        <div class="envelopeLogo">
+        <img src = "{% static 'FSapp/images/fabrica-branco.png' %}" alt = "Logo da Fábrica de Software">
+      </div>
+  </div>
+
+
+      <!-- parágrafo -->
+     <div class="relatorio">
+        <h3>Relatório Geral</h3>
+    </div>
+
+
+
+	      <!-- tabela -->
+	    <div class="envelopeRelatorio">
+      <div class="table-responsive">
+
+          <!-- Buscar -->
+
+        <input type="text" id="buscar" onkeyup="myFunction()" placeholder="Digite a área de interesse" title="Type in a name">
+
+      <table id="myTable" class="table table-striped table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Posição</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Area de Interesse</th>
+          <th scope="col">Tempo (em minutos)</th>
+            <th scope="col">Nota do Desafio</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pessoa in pessoas_sorted %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{pessoa.first_name}} {{pessoa.last_name}}</td>
+                <td>{{pessoa.areadeinteresse}}</td>
+                <td>{{pessoa.horastotal}} min</td>
+                <td>{{pessoa.notadesafio}}</td>
+
+            </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+    </div>
+
+
+        <div id="botaoVoltar">
+      <a class="btn btn-primary btn-md btn-block" href="{% url 'dashboard' %}">Voltar</a>
+      </div>
+
+
+
+	<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script>
+        function myFunction() {
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("buscar");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("myTable");
+          tr = table.getElementsByTagName("tr");
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        }
+        </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="{% static 'FSapp/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

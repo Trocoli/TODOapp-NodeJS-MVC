@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'FSapp/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'FSapp/css/styles.css' %}">
+    {% load qr_code %}
+      {% csrf_token %}
+    <title>Imersão 2020.1</title>
+  </head>
+  <body>
+
+
+
+<!--confirmação de cadastro-->
+
+<div class="container col-xl-4 col-md-6">
+
+    <div class="envelopeLogo">
+        <img src = "{% static 'FSapp/images/fabrica-branco.png' %}" alt = "Logo da Fábrica de Software">
+    </div>
+
+    <div class="imersao">
+        <h3>IMERSÃO 2020.1</h3>
+    </div>
+
+    <div class="envelopeForm">
+
+      <div class="envelopeInforma">
+        <p class = "text-primary text-center m-0" >
+            <b>Cadastro efetuado com sucesso!</b> <br><br>
+            Este é o seu QR Code invidual para marcar a sua presença nas Palestras e Workshops da Imersão. <br><br>
+            <b>Clique no QR Code para efetuar o download</b>.
+        </p>
+      </div>
+        {% load static %}
+        <div align="center">
+            <a href="/media/qrcode/{{imersionista.matricula}}.png" download>
+                <img src="/media/qrcode/{{imersionista.matricula}}.png">
+            </a>
+        </div>
+
+
+<!--QRcode gerado por uma tag da biblioteca djanngo-qr
+        <div align="center">
+            {% qr_from_text imersionista.matricula %}
+        </div>
+-->
+    </div>
+</div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="{% static 'FSapp/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

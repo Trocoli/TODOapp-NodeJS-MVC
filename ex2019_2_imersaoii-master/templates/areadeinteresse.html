@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+     {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'FSapp/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'FSapp/css/styles.css' %}">
+    {% load crispy_forms_tags %}
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" ></script>
+    <title>Area de Interesse - Imersão 2020.1</title>
+  </head>
+<body>
+        <div class="container col-xl-4 col-md-6">
+              <div class="envelopeLogo">
+                <img src = "{% static 'FSapp/images/fabrica-branco.png' %}" alt = "Logo da Fábrica de Software">
+              </div>
+        </div>
+
+        <div class="container col-xl-4 col-md-6">
+            <div class="cadastro">
+            <h3>AREA DE INTERESSE</h3>
+            </div>
+
+    <div class="envelopeForm">
+
+        <form action="" method="POST">
+            {% csrf_token %}
+
+             <div class="form-group">
+              <label for="formGroupExampleInput">Matrícula</label>
+              <input type="number" class="form-control" id="formGroupExampleInput3" placeholder="Matrícula" name="matricula">
+            </div>
+
+
+            <div class="form-group">
+                <label for="formGroupExampleInput7">Área de interesse</label>
+                <select class="custom-select" id="inputGroupSelect01" NAME="AREADEINTERESSE">
+                <option selected>Selecione uma área de interesse...</option>
+                <option value="BackEnd">Backend</option>
+                <option value="FrontEnd">Frontend</option>
+                <option value="Analise de Requisitos">Análise de Requisitos</option>
+                <option value="Banco de Dados">Banco de Dados</option>
+                <option value="Devops">DevOps</option>
+                <option value="Jogos">Jogos</option>
+                <option value="GP">Gestão de Projetos</option>
+                <option value="Testes">Testes</option>
+                    <option value="Desenvolvimento Mobile">Mobile</option>
+                <option value="Business Intelligence">Business Intelligence</option>
+          </select>
+            </div>
+
+                 <div class="botaoEnviar">
+                    <button type="submit" class="btn btn-primary btn-md btn-block">Enviar</button>
+                  </div>
+        </form>
+    </div>
+        </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="{% static 'FSapp/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

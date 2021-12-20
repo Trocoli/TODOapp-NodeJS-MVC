@@ -1,0 +1,10 @@
+# you can list packages
+libzbar-dev
+libsm6
+libxrender1
+libfontconfig1
+libice6
+# or include links to specific .deb files
+https://debian.pkgs.org/10/debian-main-amd64/libzbar-dev_0.22-1_amd64.deb.html
+# or add custom apt repos
+:repo:deb http://cz.archive.ubuntu.com/ubuntu artful main universe

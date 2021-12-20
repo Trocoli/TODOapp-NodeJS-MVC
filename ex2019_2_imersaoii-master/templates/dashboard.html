@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+     {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'FSapp/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'FSapp/css/styles.css' %}">
+    {% load crispy_forms_tags %}
+
+    <title>Fábrica de Software - Imersão 2020.1</title>
+  </head>
+  <body>
+
+      <!-- Logo * provisório * da Fábrica de Software -->
+      <div class="container col-xl-4 col-md-6">
+        <div class="envelopeLogo">
+        <img src = "{% static 'FSapp/images/fabrica-branco.png' %}" alt = "Logo da Fábrica de Software">
+      </div>
+
+
+  <!-- Caixa do nome Login -->
+  <div class="imersao">
+        <h3>Bem vindo!</h3>
+    </div>
+  <!-- Menu de opções -->
+  <div id="envelopeDashboard">
+    <div class="form-group">
+        <div class="botaoEnviar">
+          <a href="{% url 'leitorqr' %}"><button type="button" class="btn btn-primary btn-md btn-block" onclick="" name="leitorqr">Ler QR Code</button></a>
+        </div>
+        <div class="botaoEnviar">
+            <a href="{% url 'enviarlink' %}"><button  type="button" class="btn btn-primary btn-md btn-block" onclick="" name="desafio" >Enviar Email</button></a>
+        </div>
+        <div class="botaoEnviar">
+            <a href="{% url 'rankingpalestra' %}"><button type="button" class="btn btn-primary btn-md btn-block" onclick="" name="relatsem">Relatório da Semana de Palestras</button></a>
+        </div>
+        <div class="botaoEnviar">
+            <a href="{% url 'rankingworkshop' %}"><button type="button" class="btn btn-primary btn-md btn-block" onclick="" name="relatwork">Relatório da Semana de Workshop</button></a>
+        </div>
+        <div class="botaoEnviar">
+          <a href="{% url 'rankinggeral' %}"><button type="button" class="btn btn-primary btn-md btn-block" onclick="" name="desafio" >Relatório Geral</button>
+        </div>
+        <div class="botaoSair">
+            <a href="{% url 'logout' %}"><button type="button" class="btn btn-primary btn-md btn-block" onclick="" name="voltaro">Sair</button></a>
+        </div>
+      </div>
+
+
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+web:
+  build: .
+  command: python manage.py runserver 0.0.0.0:8000
+  volumes:
+    - .:/ex2019_2_imersaoii
+  ports:
+    - "9200:8000"

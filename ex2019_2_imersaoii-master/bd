@@ -1,0 +1,164 @@
+from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from .validators import *
+
+class ControleImersionista(BaseUserManager):
+    def _create_user(self, matricula, cpf, password,email,  is_staff, is_admin, is_superuser,**extrasfields):
+        if not cpf:
+            raise ValueError('CPF deve ser especificado')
+        if not matricula:
+            raise ValueError('Matricula deve ser especificado')
+
+        user = self.model(
+            matricula = matricula,
+            cpf = cpf,
+            email= email,
+            is_staff = is_staff,
+            is_admin = is_admin,
+            is_superuser = is_superuser,
+            **extrasfields
+        )
+
+        user.set_password(password)
+
+        user.save(using=self._db)
+
+        return user
+
+
+    def create_user(self, matricula, cpf,email, **extrafields):
+        return self._create_user(matricula, cpf, email , False, False, False, **extrafields)
+
+    def create_superuser(self, matricula, cpf, password, email, **extrafields):
+        user = self._create_user(matricula, cpf, password, email, True, True, True, **extrafields)
+        user.save(using=self._db)
+        return user
+
+
+class Imersionista(AbstractBaseUser):
+    matricula = models.IntegerField(blank=False, null=False)
+    first_name = models.CharField(max_length=30, blank=False, null=False)
+    last_name = models.CharField(max_length=30, blank=False, null=False)
+    cpf = models.CharField(max_length=15, blank=False, null=False)
+    email = models.EmailField(max_length=60, blank=False, null=False)
+    Curso_Tipo = [
+        ('C', 'Ciência da computação'),
+        ('S', 'Sistemas para internet'),
+        ('G', 'Gestão da Ti'),
+        ('R', 'Redes de computadores'),
+        ('O', 'Outros'),
+    ]
+    curso = models.CharField(max_length=1, choices=Curso_Tipo, default= "Outros")
+    periodo = models.CharField(max_length=1, blank=True, null=True)
+    anexo_2 = models.BinaryField(blank=False, null=False)
+    anexo_1 = models.BinaryField(blank=False, null=False)
+    anexo_3 = models.BinaryField(blank=False, null=False)
+
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'matricula'
+    REQUIRED_FIELDS = ['cpf', 'email']
+
+    objects = ControleImersionista()
+
+    class Meta:
+        verbose_name = 'Usuário'
+        verbose_name_plural = 'Usuários'
+
+    def __str__(self):
+        return self.first_name
+
+    def has_perm(self, perm, obj=None):
+        return self.is_admin
+
+    def has_module_perms(self, app_Label):
+        return True
+
+
+
+class Participa(models.Model):
+    fk_qr_code_usuario_id_qrcode = models.ForeignKey('QrCodeUsuario', on_delete = models.PROTECT,
+                                                     db_column='fk_qr_code_usuario_id_qrcode', blank=True, null=True)
+    fk_qr_code_usuario_matricula = models.IntegerField(blank=True, null=True)
+    fk_eventos_id_eventos = models.ForeignKey('Eventos', on_delete = models.PROTECT ,  db_column='fk_eventos_id_eventos', blank=True,
+                                              null=True)
+
+    class Meta:
+        db_table = 'participa'
+
+
+class Eventos(models.Model):
+    id_eventos = models.IntegerField(primary_key=True)
+    data = models.DateField(blank=True, null=True)
+    horario = models.TimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'eventos'
+
+
+class Palestras(models.Model):
+    qtde_participantes = models.IntegerField(blank=True, null=True)
+    id_palestra = models.IntegerField(primary_key=True)
+    tema = models.CharField(max_length=80, blank=False, null=False)
+    palestrante = models.CharField(max_length=50, blank=False, null=False)
+    fk_eventos_id_eventos = models.ForeignKey('Eventos' , on_delete = models.PROTECT, db_column='fk_eventos_id_eventos')
+
+    class Meta:
+        db_table = 'palestras'
+        unique_together = (('id_palestra', 'fk_eventos_id_eventos'),)
+
+
+class Workshop(models.Model):
+    area_workshop = models.CharField(primary_key=True, max_length=20)
+    participantes_id = models.IntegerField(blank=True, null=True)
+    veteranos = models.CharField(max_length=50, blank=True, null=True)
+    presenca = models.CharField(max_length=50, blank=True, null=True)
+    fk_eventos_id_eventos = models.ForeignKey('Eventos', on_delete = models.PROTECT, db_column='fk_eventos_id_eventos')
+
+    class Meta:
+        db_table = 'workshop'
+        unique_together = (('area_workshop', 'fk_eventos_id_eventos'),)
+
+
+class Ponto(models.Model):
+    data = models.DateField(blank=False, null=False)
+    saida = models.TimeField(blank=True, null=True)
+    entrada = models.TimeField(blank=True, null=True)
+    #id_ponto = models.IntegerField(primary_key=True, blank=False, null=False)
+    #horario_total = models.CharField(max_length=50, blank=True, null=True)
+    imersionista = models.ForeygnKey('Imersionista',on_delete=CASCADE)
+
+
+class Relatorios(models.Model):
+    desafio = models.BooleanField(blank=True, null=True)
+    id_relatorio = models.IntegerField(primary_key=True)
+    frequencia_palestras = models.CharField(max_length=20, blank=True, null=True)
+    frequencia_workshop = models.CharField(max_length=20, blank=True, null=True)
+    comentarios = models.CharField(max_length=100, blank=True, null=True)
+    fk_ponto_id_ponto = models.ForeignKey('Ponto', on_delete = models.PROTECT, db_column='fk_ponto_id_ponto', blank=True,
+                                          null=True)
+
+    class Meta:
+        db_table = 'relatorios'
+
+
+class Decide(models.Model):
+    fk_selecionados_id_selecionados = models.ForeignKey('Selecionados', models.DO_NOTHING,
+                                                        db_column='fk_selecionados_id_selecionados', blank=True,
+                                                        null=True)
+    fk_relatorios_id_relatorio = models.ForeignKey('Relatorios', on_delete = models.PROTECT,
+                                                   db_column='fk_relatorios_id_relatorio', blank=True, null=True)
+
+    class Meta:
+        db_table = 'decide'
+
+
+class Selecionados(models.Model):
+    id_selecionados = models.IntegerField(primary_key=True)
+    area = models.CharField(max_length=20, blank=True, null=True)
+
+    class Meta:
+        db_table = 'selecionados'
